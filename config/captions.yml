@@ -1,0 +1,31 @@
+nav:
+  home: Home
+  demo: Demo
+  login: Login
+  logout: Logout
+  register: Register
+
+login:
+  title: Login
+  username: Username
+  password: Password
+  submit: Login
+  register_link: Register new account
+  error: Invalid username or password
+
+register:
+  title: Register
+  username: Username
+  password: Password
+  submit: Register
+  login_link: Back to login
+  error: Username already exists
+
+index:
+  brand: Simple Framework
+  title: Simple Framework - Home
+  welcome_title: Welcome to Simple Framework
+  welcome_text: A lightweight PHP framework for building modern web applications with a clean MVC architecture.
+  features_title: Key Features
+  getting_started_title: Getting Started
+  quick_links: Quick Links

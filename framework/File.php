@@ -2,6 +2,8 @@
 
 namespace SimpleFramework;
 
+use Symfony\Component\Yaml\Yaml;
+
 class File extends Entity
 {
   private string $basePath;
@@ -36,12 +38,12 @@ class File extends Entity
     
     switch($this->extension)
     {
-      case 'json':
-        $this->data = json_decode($content, true) ?? [];
-        break;
       case 'yml':
       case 'yaml':
-        $this->data = \Symfony\Component\Yaml\Yaml::parse($content) ?? [];
+        $this->data = Yaml::parse($content) ?? [];
+        break;
+      case 'json':
+        $this->data = json_decode($content, true) ?? [];
         break;
       default:
         $this->data = ['content' => $content];
@@ -51,7 +53,7 @@ class File extends Entity
   public function fullPath(): string
   {
     if( !$this->extension)
-      $this->extension = 'json';
+      $this->extension = 'yaml';
 
     return sprintf('%s/%s.%s', 
       $this->basePath, 
@@ -70,12 +72,12 @@ class File extends Entity
 
     switch($this->extension)
     {
-      case 'json':
-        $content = json_encode($this->data, JSON_PRETTY_PRINT);
-        break;
       case 'yml':
       case 'yaml':
-        $content = \Symfony\Component\Yaml\Yaml::dump($this->data);
+        $content = Yaml::dump($this->data, 4);
+        break;
+      case 'json':
+        $content = json_encode($this->data, JSON_PRETTY_PRINT);
         break;
       default:
         $content = $this->data['content'] ?? '';
@@ -86,7 +88,7 @@ class File extends Entity
 
   private function findExtension(): void
   {
-    $extensions = ['json', 'yml', 'yaml'];
+    $extensions = ['yaml', 'yml', 'json'];
 
     foreach($extensions as $ext)
     {
