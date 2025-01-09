@@ -1,7 +1,5 @@
 <?php
 
-// namespace App;
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 use SimpleFramework\App;
@@ -9,7 +7,7 @@ use SimpleFramework\App;
 $app = App::getInstance();
 $request = $app->getRequest();
 
-if( !$request->isAjax())
+if( ! $request->isAjax())
 {
   $app->getResponse()
     ->setStatusCode(403)
@@ -18,7 +16,8 @@ if( !$request->isAjax())
 }
 
 $handler = $request->get('handler');
-if( !$handler)
+
+if( ! $handler)
 {
   $app->getResponse()
     ->setStatusCode(400)
@@ -32,7 +31,7 @@ $handlerPath = sprintf('%s/pages/%s/ajax/%s.php',
   $handler
 );
 
-if( !file_exists($handlerPath))
+if( ! file_exists($handlerPath))
 {
   $app->getResponse()
     ->setStatusCode(404)

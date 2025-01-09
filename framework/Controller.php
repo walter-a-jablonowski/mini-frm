@@ -13,7 +13,7 @@ class Controller
 
   protected function render(string $view, array $data = []): string
   {
-    $page = $this->app->getRequest()->get('page') ?? 'index';
+    $page = $this->app->getRequest()->get('page') ?? 'index';  // TASK: view.php or view/-this.php
     $viewPath = sprintf('%s/pages/%s/view/%s.php', 
       dirname(__DIR__),
       $page,

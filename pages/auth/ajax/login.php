@@ -6,7 +6,7 @@ $response = $app->getResponse();
 
 $data = $request->json();
 
-if( !isset($data['username']) || !isset($data['password']))
+if( ! isset($data['username']) || !isset($data['password']))
 {
   $response->setStatusCode(400)
     ->json(['error' => 'Username and password are required'])
@@ -16,7 +16,7 @@ if( !isset($data['username']) || !isset($data['password']))
 $user = $app->getUser();
 $result = $user->login($data['username'], $data['password']);
 
-if( !$result)
+if( ! $result)
 {
   $response->setStatusCode(401)
     ->json(['error' => $app->getCaptions()->get('login.error')])
