@@ -8,7 +8,7 @@ class Cache
 
   public function __construct(string $namespace)
   {
-    $this->file = new File($namespace);
+    $this->file = new File("data/{$namespace}");
     
     if( ! file_exists($this->file->fullPath()))
     {
