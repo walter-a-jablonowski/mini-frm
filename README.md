@@ -9,7 +9,7 @@ Possible extensions
 - detail check of AI's code
 - maybe improve some code or add some methods
 - further framework classes could be added
-- things that the AI missed as seen so far: see [text](tasks.md)
+- things that the AI missed as seen so far: see [text](tasks.md) (file was moved)
 
 ## Features
 
