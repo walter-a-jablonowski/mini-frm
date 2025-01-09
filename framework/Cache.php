@@ -8,9 +8,9 @@ class Cache
 
   public function __construct(string $namespace)
   {
-    $this->file = new File("data/cache/{$namespace}");
+    $this->file = new File("data/{$namespace}");
     
-    if( !file_exists($this->file->fullPath()))
+    if( ! file_exists($this->file->fullPath()))
     {
       $dir = dirname($this->file->fullPath());
       if( !is_dir($dir))

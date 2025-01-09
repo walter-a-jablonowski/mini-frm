@@ -6,8 +6,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class File extends Entity
 {
-  private string $basePath;
-  private string $relativePath;
+  private string  $basePath;
+  private string  $relativePath;
   private ?string $extension = null;
 
   public function __construct(string $relativePath)
@@ -28,7 +28,7 @@ class File extends Entity
   {
     $path = $this->fullPath();
     
-    if( !file_exists($path))
+    if( ! file_exists($path))
     {
       $this->data = [];
       return;

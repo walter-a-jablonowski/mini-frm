@@ -11,10 +11,10 @@ class Session
     if( session_status() === PHP_SESSION_NONE)
       session_start();
 
-    $this->cache = new Cache('session');
+    $this->cache = new Cache('session_cache');
   }
 
-  public function set(string $key, $value): void
+  public function set(string $key, $value) : void
   {
     $_SESSION[$key] = $value;
   }
@@ -24,22 +24,22 @@ class Session
     return $_SESSION[$key] ?? null;
   }
 
-  public function remove(string $key): void
+  public function remove(string $key) : void
   {
     unset($_SESSION[$key]);
   }
 
-  public function destroy(): void
+  public function destroy() : void
   {
     session_destroy();
   }
 
-  public function getCache(): Cache
+  public function getCache() : Cache
   {
     return $this->cache;
   }
 
-  public function has(string $key): bool
+  public function has(string $key) : bool
   {
     return isset($_SESSION[$key]);
   }
