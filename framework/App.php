@@ -43,20 +43,21 @@ class App
   {
     try 
     {
-      // Initialize core components first that don't depend on others
+      // Initialize core components first that don't have dependencies
       
-      $this->config = new Config();
+      $this->config   = new Config();
       $this->errorHandler = new ErrorHandler();
-      $this->session = new Session();
-      $this->request = new Request();
+      $this->session  = new Session();
+      $this->request  = new Request();
       $this->response = new Response();
       
-      // Then initialize components that may need the core ones
+      // Initialize components that may need the core ones
       
-      $this->router = new Router();
+      $this->router   = new Router();
       $this->captions = new Captions();
       
       // Initialize user last since it depends on session
+
       if( $this->session->has('user_id'))
       {
         try {
