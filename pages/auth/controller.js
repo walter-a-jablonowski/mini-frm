@@ -31,6 +31,7 @@ class AuthController
           'Content-Type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'
         },
+        credentials: 'same-origin',
         body: JSON.stringify(data)
       });
 
@@ -65,6 +66,7 @@ class AuthController
           'Content-Type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'
         },
+        credentials: 'same-origin',
         body: JSON.stringify(data)
       });
 

@@ -10,7 +10,6 @@ class Router
 
   public function add(string $page, string $controller, string $action): void
   {
-    error_log("Adding route - Page: $page, Controller: $controller, Action: $action");
     $this->routes[$page] = [
       'controller' => $controller,
       'action' => $action
@@ -32,41 +31,23 @@ class Router
     $page   = $request->get('page') ?? 'index';
     $action = $request->get('action') ?? null;
 
-    error_log("Dispatching - Page: $page, Action: " . ($action ?? 'none'));
-
     if( $action !== null)
       $page = $page . '/' . $action;
 
-    error_log("Looking for route: $page");
-    error_log("Available routes: " . print_r($this->routes, true));
-
     if( ! isset($this->routes[$page]))
-    {
-      error_log("Route not found: $page");
       throw new \RuntimeException("Page not found: {$page}");
-    }
 
     $route = $this->routes[$page];
     $controllerClass = $route['controller'];
     $action = $route['action'];
 
-    error_log("Loading controller: $controllerClass");
-
     if( ! class_exists($controllerClass))
-    {
-      error_log("Controller not found: $controllerClass");
       throw new \RuntimeException("Controller not found: {$controllerClass}");
-    }
 
     $controller = new $controllerClass();
     
-    error_log("Checking action: $action");
-    
     if( ! method_exists($controller, $action))
-    {
-      error_log("Action not found: $action in $controllerClass");
       throw new \RuntimeException("Action not found: {$action}");
-    }
 
     foreach($this->beforeMiddleware as $middleware)
       $middleware($request);

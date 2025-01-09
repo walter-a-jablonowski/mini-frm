@@ -57,9 +57,8 @@ class App
       // Initialize user last since it depends on session
       $this->user = new User($this->session);
       
-    } catch (\Throwable $e) 
-    {
-      error_log("Error initializing components: " . $e->getMessage());
+    }
+    catch (\Throwable $e) {
       throw $e;
     }
   }

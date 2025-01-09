@@ -20,12 +20,12 @@
             <form id="login-form">
               <div class="mb-3">
                 <label class="form-label"><?= $captions->username ?? 'Username' ?></label>
-                <input type="text" class="form-control" name="username" required>
+                <input type="text" class="form-control" name="username" value="walterjab" required>
               </div>
 
               <div class="mb-3">
                 <label class="form-label"><?= $captions->password ?? 'Password' ?></label>
-                <input type="password" class="form-control" name="password" required>
+                <input type="password" class="form-control" name="password" value="superadmin" required>
               </div>
 
               <button type="submit" class="btn btn-primary w-100">
