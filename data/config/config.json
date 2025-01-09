@@ -1,0 +1,10 @@
+{
+    "debug": true,
+    "timezone": "Europe\/Berlin",
+    "database": {
+        "host": "localhost",
+        "name": "simple_framework",
+        "user": "root",
+        "pass": ""
+    }
+}

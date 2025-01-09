@@ -1,0 +1,18 @@
+{
+  "name": "simple/framework",
+  "description": "A simple PHP framework",
+  "type": "project",
+  "require": {
+    "php": ">=7.4",
+    "symfony/yaml": "^5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "SimpleFramework\\": "framework/"
+    },
+    "classmap": [
+      "pages/index/controller.php",
+      "pages/auth/controller.php"
+    ]
+  }
+}

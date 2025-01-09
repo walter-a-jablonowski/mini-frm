@@ -1,0 +1,9 @@
+/* Add any page-specific styles here */
+.container {
+  max-width: 800px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
