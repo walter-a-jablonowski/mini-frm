@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Pages\Index;
 
 use SimpleFramework\App;
@@ -15,6 +14,9 @@ class IndexController
 
   public function index()
   {
+    $app = $this->app;
+    $captions = $app->getCaptions();
+    
     ob_start();
     include __DIR__ . '/view.php';
     return ob_get_clean();
