@@ -2,13 +2,12 @@
 
 namespace SimpleFramework;
 
-class Config extends Entity
+class Config
 {
   private File $file;
 
   public function __construct()
   {
-    parent::__construct();
     $this->file = new File('config/config');
     $this->load();
   }
@@ -16,12 +15,11 @@ class Config extends Entity
   public function load(): void 
   {
     $this->file->load();
-    $this->data = $this->file->data;
 
-    if( empty($this->data))
+    if( empty($this->file->data))
     {
       // Set default configuration
-      $this->data = [
+      $this->file->data = [
         'debug' => true,
         'timezone' => 'Europe/Berlin',
         'database' => [
@@ -31,29 +29,18 @@ class Config extends Entity
           'pass' => ''
         ]
       ];
-      $this->save();
+
+      $this->file->save();
     }
   }
 
   public function get(string $key, mixed $default = null): mixed
   {
-    $parts = explode('.', $key);
-    $data = $this->data;
-    
-    foreach($parts as $part)
-    {
-      if( !isset($data[$part]))
-        return $default;
-        
-      $data = $data[$part];
-    }
-    
-    return $data;
+    return $this->file->get($key, $default);
   }
 
-  public function save(): void
+  public function set(string $key, mixed $value): void
   {
-    $this->file->data = $this->data;
-    $this->file->save();
+    $this->file->set($key, $value);
   }
 }

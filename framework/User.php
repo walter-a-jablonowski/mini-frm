@@ -2,7 +2,7 @@
 
 namespace SimpleFramework;
 
-class User extends Entity
+class User
 {
   private File $file;
   private ?array $currentUser = null;
@@ -10,7 +10,6 @@ class User extends Entity
 
   public function __construct(Session $session)
   {
-    parent::__construct();
     $this->session = $session;
     $this->file = new File('users/users');
     
@@ -25,7 +24,6 @@ class User extends Entity
     }
 
     $this->file->load();
-    $this->data = $this->file->data['users'] ?? [];
     
     if( $this->session->has('user_id'))
       $this->currentUser = $this->findById($this->session->get('user_id'));
@@ -36,20 +34,23 @@ class User extends Entity
     if( $this->findByUsername($username))
       return false;
       
-    $id = count($this->data) + 1;
-    $this->data[] = [
+    $users = $this->file->data['users'] ?? [];
+    $id = count($users) + 1;
+    $users[] = [
       'id' => $id,
       'username' => $username,
       'password' => password_hash($password, PASSWORD_DEFAULT)
     ];
     
-    $this->save();
+    $this->file->data = ['users' => $users];
+    $this->file->save();
     return true;
   }
 
   private function findById(int $id): ?array
   {
-    foreach($this->data as $user)
+    $users = $this->file->data['users'] ?? [];
+    foreach($users as $user)
       if( $user['id'] === $id)
         return $user;
     return null;
@@ -57,7 +58,8 @@ class User extends Entity
 
   private function findByUsername(string $username): ?array
   {
-    foreach($this->data as $user)
+    $users = $this->file->data['users'] ?? [];
+    foreach($users as $user)
       if( $user['username'] === $username)
         return $user;
     return null;
@@ -84,16 +86,14 @@ class User extends Entity
     return true;
   }
 
-  public function load(): void
+  public function get(string $key, mixed $default = null): mixed
   {
-    $this->file->load();
-    $this->data = $this->file->data['users'] ?? [];
+    return $this->file->get($key, $default);
   }
 
-  public function save(): void
+  public function set(string $key, mixed $value): void
   {
-    $this->file->data = ['users' => $this->data];
-    $this->file->save();
+    $this->file->set($key, $value);
   }
 
   public function logout(): void

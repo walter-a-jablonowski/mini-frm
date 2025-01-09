@@ -2,31 +2,30 @@
 
 namespace SimpleFramework;
 
-class Captions extends Entity
+class Captions
 {
   private File $file;
 
   public function __construct()
   {
-    parent::__construct();
     $this->file = new File('config/captions');
     
-    if( ! file_exists($this->file->fullPath()))
+    if( !file_exists($this->file->fullPath()))
     {
       $dir = dirname($this->file->fullPath());
       if( !is_dir($dir))
         mkdir($dir, 0777, true);
       
       $this->setDefaults();
-      $this->save();
+      $this->file->save();
     }
 
-    $this->load();
+    $this->file->load();
   }
 
   private function setDefaults(): void
   {
-    $this->data = [
+    $this->file->data = [
       'login' => [
         'title' => 'Login',
         'username' => 'Username',
@@ -50,15 +49,13 @@ class Captions extends Entity
     ];
   }
 
-  public function load(): void
+  public function get(string $key, mixed $default = null): mixed
   {
-    $this->file->load();
-    $this->data = $this->file->data['captions'] ?? $this->data;
+    return $this->file->get($key, $default);
   }
 
-  public function save(): void
+  public function set(string $key, mixed $value): void
   {
-    $this->file->data = ['captions' => $this->data];
-    $this->file->save();
+    $this->file->set($key, $value);
   }
 }
