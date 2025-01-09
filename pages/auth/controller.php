@@ -3,9 +3,14 @@
 namespace App\Pages\Auth;
 
 use SimpleFramework\Controller;
+use App\Pages\Auth\LoginAction;
+use App\Pages\Auth\RegisterAction;
 
 class AuthController extends Controller
 {
+  use LoginAction;
+  use RegisterAction;
+
   public function renderLogin() : string
   {
     if( $this->app->getUser()->isLoggedIn())

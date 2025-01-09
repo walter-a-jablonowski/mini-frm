@@ -4,15 +4,17 @@
   "type": "project",
   "require": {
     "php": ">=7.4",
-    "symfony/yaml": "^5.4"
+    "symfony/yaml": "^6.3"
   },
   "autoload": {
     "psr-4": {
       "SimpleFramework\\": "framework/"
     },
     "classmap": [
-      "pages/index/controller.php",
-      "pages/auth/controller.php"
+      "pages/auth/controller.php",
+      "pages/auth/ajax/LoginAction.php",
+      "pages/auth/ajax/RegisterAction.php",
+      "pages/index/controller.php"
     ]
   }
 }

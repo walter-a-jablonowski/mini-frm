@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Pages\Index;
 
 use SimpleFramework\Controller;
@@ -21,19 +22,14 @@ class IndexController extends Controller
     ]);
   }
 
-  public function logout(): void
+  public function logout() : void
   {
-    // TASK: maybe unneeded, but we also have a fwd in js
-
-    // if( $this->app->getRequest()->isAjax())
-    // {
-    //   $this->app->getUser()->logout();
-    //   $this->app->getResponse()
-    //     ->json(['success' => true])
-    //     ->send();
-    // }
-    
     $this->app->getUser()->logout();
-    $this->app->getResponse()->redirect('?page=auth&action=login');
+    $this->app->getResponse()->json(['success' => true])->send();
+
+    // TASK: maybe unneeded
+    
+    // $this->app->getUser()->logout();
+    // $this->app->getResponse()->redirect('?page=auth&action=login');
   }
 }

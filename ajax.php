@@ -16,22 +16,32 @@ if( ! $request->isAjax())
 }
 
 $handler = $request->get('handler');
+$page = $request->get('page');
 
-if( ! $handler)
+if( ! $handler || ! $page)
 {
   $app->getResponse()
     ->setStatusCode(400)
-    ->json(['error' => 'No handler specified'])
+    ->json(['error' => 'Missing handler or page parameter'])
     ->send();
 }
 
-$handlerPath = sprintf('%s/pages/%s/ajax/%s.php', 
-  __DIR__,
-  $request->get('page'),
-  $handler
+$controllerClass = sprintf('App\\Pages\\%s\\%sController', 
+  ucfirst($page),
+  ucfirst($page)
 );
 
-if( ! file_exists($handlerPath))
+if( ! class_exists($controllerClass))
+{
+  $app->getResponse()
+    ->setStatusCode(404)
+    ->json(['error' => 'Controller not found'])
+    ->send();
+}
+
+$controller = new $controllerClass();
+
+if( ! method_exists($controller, $handler))
 {
   $app->getResponse()
     ->setStatusCode(404)
@@ -39,4 +49,4 @@ if( ! file_exists($handlerPath))
     ->send();
 }
 
-require_once $handlerPath;
+$controller->$handler();
