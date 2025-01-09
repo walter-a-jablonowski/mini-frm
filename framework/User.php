@@ -82,7 +82,7 @@ class User
     $users = self::getAllUsers();
     $id = count($users) + 1;
     
-    $userFile = new File('users/' . $username . '/-this');
+    $userFile = new File("users/{$username}/-this");
     $userFile->set('id', $id);
     $userFile->set('username', $username);
     $userFile->set('password', password_hash($password, PASSWORD_DEFAULT));

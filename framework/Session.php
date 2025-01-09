@@ -11,7 +11,7 @@ class Session
     if( session_status() === PHP_SESSION_NONE)
       session_start();
 
-    $this->cache = new Cache('session_cache');
+    $this->cache = new Cache('session_cache/' . session_id() . '-this');
   }
 
   public function set(string $key, $value) : void

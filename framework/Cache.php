@@ -56,7 +56,7 @@ class Cache
 
   public function clear(): void
   {
-    $this->file = new File("cache/{$this->namespace}");
+    $this->file = new File("data/{$this->namespace}");
     $this->file->save();
   }
 }

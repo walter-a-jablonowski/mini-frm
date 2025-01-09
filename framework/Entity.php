@@ -18,7 +18,7 @@ abstract class Entity
     return $this->data[$name] ?? null;
   }
 
-  public function get(string $key, mixed $default = null): mixed
+  public function get(string $key, $default = null)
   {
     $parts = explode('.', $key);
     $data = $this->data;
@@ -39,7 +39,7 @@ abstract class Entity
     $this->data[$name] = $value;
   }
 
-  public function set(string $key, mixed $value): void
+  public function set(string $key, $value): void
   {
     $parts = explode('.', $key);
     $lastKey = array_pop($parts);
