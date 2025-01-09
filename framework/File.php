@@ -6,20 +6,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class File extends Entity
 {
-  private string  $basePath;
   private string  $relativePath;
   private ?string $extension = null;
 
   public function __construct(string $relativePath)
   {
     parent::__construct();
-    $rootDir = dirname(__DIR__);
-    
-    if( strpos($relativePath, 'config/') === 0)
-      $this->basePath = $rootDir;
-    else
-      $this->basePath = $rootDir . '/data';
-      
+          
     $this->relativePath = $relativePath;
     $this->findExtension();
   }
@@ -58,8 +51,7 @@ class File extends Entity
     if( ! $this->extension)
       $this->extension = 'yml';
 
-    return sprintf('%s/%s.%s', 
-      $this->basePath, 
+    return sprintf('%s.%s', 
       $this->relativePath,
       $this->extension
     );
@@ -89,11 +81,6 @@ class File extends Entity
     file_put_contents($path, $content);
   }
 
-  public function getBasePath(): string
-  {
-    return $this->basePath;
-  }
-
   private function findExtension(): void
   {
     $extensions = ['yml', 'yaml', 'json'];
@@ -110,8 +97,7 @@ class File extends Entity
     // Then check for existing files
     foreach($extensions as $ext)
     {
-      $path = sprintf('%s/%s.%s', 
-        $this->basePath, 
+      $path = sprintf('%s.%s', 
         $this->relativePath,
         $ext
       );

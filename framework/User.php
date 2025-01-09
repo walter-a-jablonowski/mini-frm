@@ -6,8 +6,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class User
 {
-  private ?File   $file = null;
-  private ?self   $currentUser = null;
+  private ?File $file = null;
+  private ?self $currentUser = null;
 
   public function __construct( string $key, $value )  
   {
@@ -23,16 +23,15 @@ class User
           return;
         }
       }
+
       throw new \RuntimeException("User not found");
     }
     
     // Loading by username (or other keys)
-    $this->file = new File("users/$value/-this");
+    $this->file = new File("data/users/$value/-this");
       
     if( ! file_exists($this->file->fullPath()))
-    {
       throw new \RuntimeException("User not found");
-    }
       
     $this->file->load();
     
@@ -48,27 +47,13 @@ class User
   public static function getAllUsers(): array
   {
     $users = [];
-    $dir   = new File('users');
-    $path  = sprintf('%s/%s', $dir->getBasePath(), 'users');
-    
-    if (!is_dir($path))
+
+    foreach( scandir('data/users') as $username)
     {
-      return [];
-    }
-    
-    foreach(scandir($path) as $username)
-    {
-      if( $username === '.' || $username === '..')
+      if( ! is_dir("data/users/$username") || in_array($username, ['.', '..']))
         continue;
-        
-      try 
-      {
-        $users[] = new self('username', $username);
-      }
-      catch(\RuntimeException $e) 
-      {
-        continue;
-      }
+
+      $users[] = new self('username', $username);
     }
 
     return $users;
@@ -82,7 +67,7 @@ class User
     $users = self::getAllUsers();
     $id = count($users) + 1;
     
-    $userFile = new File("users/{$username}/-this");
+    $userFile = new File("data/users/{$username}/-this");
     $userFile->set('id', $id);
     $userFile->set('username', $username);
     $userFile->set('password', password_hash($password, PASSWORD_DEFAULT));
