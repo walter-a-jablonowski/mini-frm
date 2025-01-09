@@ -6,22 +6,22 @@ use SimpleFramework\Controller;
 
 class AuthController extends Controller
 {
-  public function login()
+  public function login(): string
   {
     if( $this->app->getUser()->isLoggedIn())
       header('Location: ?page=index');
 
-    $this->render('login', [
+    return $this->render('login', [
       'captions' => $this->app->getCaptions()->get('login')
     ]);
   }
 
-  public function register()
+  public function register(): string
   {
     if( $this->app->getUser()->isLoggedIn())
       header('Location: ?page=index');
 
-    $this->render('register', [
+    return $this->render('register', [
       'captions' => $this->app->getCaptions()->get('register')
     ]);
   }
