@@ -29,7 +29,7 @@ class Router
 
   public function dispatch(Request $request): string
   {
-    $page = $request->get('page') ?? 'index';
+    $page   = $request->get('page') ?? 'index';
     $action = $request->get('action') ?? null;
 
     error_log("Dispatching - Page: $page, Action: " . ($action ?? 'none'));
@@ -40,7 +40,7 @@ class Router
     error_log("Looking for route: $page");
     error_log("Available routes: " . print_r($this->routes, true));
 
-    if( !isset($this->routes[$page]))
+    if( ! isset($this->routes[$page]))
     {
       error_log("Route not found: $page");
       throw new \RuntimeException("Page not found: {$page}");
@@ -52,7 +52,7 @@ class Router
 
     error_log("Loading controller: $controllerClass");
 
-    if( !class_exists($controllerClass))
+    if( ! class_exists($controllerClass))
     {
       error_log("Controller not found: $controllerClass");
       throw new \RuntimeException("Controller not found: {$controllerClass}");
@@ -62,7 +62,7 @@ class Router
     
     error_log("Checking action: $action");
     
-    if( !method_exists($controller, $action))
+    if( ! method_exists($controller, $action))
     {
       error_log("Action not found: $action in $controllerClass");
       throw new \RuntimeException("Action not found: {$action}");
@@ -76,7 +76,7 @@ class Router
     foreach($this->afterMiddleware as $middleware)
       $middleware($request);
 
-    if( !is_string($content))
+    if( ! is_string($content))
       throw new \RuntimeException("Controller action must return a string");
 
     return $content;

@@ -1,7 +1,5 @@
 <?php
 
-// namespace App;
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 use SimpleFramework\App;
@@ -14,6 +12,7 @@ $router = $app->getRouter();
 
 // Auth routes
 $router->add('auth', 'App\\Pages\\Auth\\AuthController', 'login');
+$router->add('auth/login', 'App\\Pages\\Auth\\AuthController', 'login');
 $router->add('auth/register', 'App\\Pages\\Auth\\AuthController', 'register');
 
 // Index route

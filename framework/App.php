@@ -68,6 +68,15 @@ class App
   {
     try 
     {
+      // Check authentication and redirect if needed
+      if( ! $this->user->isLoggedIn() && 
+          $this->request->get('page') !== 'auth' && 
+          ! $this->request->isAjax())
+      {
+        $this->response->redirect('?page=auth&action=login');
+        return;
+      }
+
       $route = $this->router->dispatch($this->request);
       $this->response->setContent($route);
       $this->response->send();

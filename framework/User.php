@@ -76,7 +76,7 @@ class User extends Entity
   public function login(string $username, string $password): bool
   {
     $user = $this->findByUsername($username);
-    if( !$user || !password_verify($password, $user['password']))
+    if( ! $user || ! password_verify($password, $user['password']))
       return false;
       
     $this->session->set('user_id', $user['id']);

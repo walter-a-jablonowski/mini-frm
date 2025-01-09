@@ -26,6 +26,12 @@ class Response
     return $this;
   }
 
+  public function redirect(string $url): void
+  {
+    header('Location: ' . $url);
+    exit;
+  }
+
   public function json(array $data): self
   {
     $this->setHeader('Content-Type', 'application/json');

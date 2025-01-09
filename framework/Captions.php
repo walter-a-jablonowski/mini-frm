@@ -11,7 +11,7 @@ class Captions extends Entity
     parent::__construct();
     $this->file = new File('config/captions');
     
-    if( !file_exists($this->file->fullPath()))
+    if( ! file_exists($this->file->fullPath()))
     {
       $dir = dirname($this->file->fullPath());
       if( !is_dir($dir))

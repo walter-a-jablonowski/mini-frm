@@ -44,19 +44,21 @@ Possible extensions
 ## Directory Structure
 
 ```
-/data                # File-based storage
-/pages               # Application pages
+/data                   # File-based storage
+/pages                  # Application pages
   /PAGE_NAME
-    /ajax            # AJAX handlers
+    /ajax               # AJAX handlers
     controller.php
     controller.js
     style.css
-    /view/-this.php  # Page view
-    /view.php        # or
+    /view/-this.php     # Page view
+    /view.php           # or
+    /view/login.php     # or multiple
+    /view/register.php
 /src
-  /Core              # Framework core classes
-ajax.php             # AJAX request handler
-index.php            # Application entry point
+  /Core                 # Framework core classes
+ajax.php                # AJAX request handler
+index.php               # Application entry point
 ```
 
 
