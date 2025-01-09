@@ -14,7 +14,7 @@ class IndexController
     
     try
     {
-      const response = await fetch('ajax.php?page=index&handler=logout', {
+      const response = await fetch('ajax.php?page=index&handler=ajaxLogout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ class IndexController
       if( !response.ok)
         throw new Error(result.error);
 
-      window.location.href = '?page=auth&action=login';
+      window.location.href = '?page=auth';
     }
     catch(error)
     {

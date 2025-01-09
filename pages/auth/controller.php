@@ -11,23 +11,37 @@ class AuthController extends Controller
   use LoginAction;
   use RegisterAction;
 
-  public function renderLogin() : string
+  public function renderLogin(): void
   {
-    if( $this->app->getUser()->isLoggedIn())
-      header('Location: ?page=index');
+    if( $this->app->isLoggedIn())
+    {
+      $this->app->getResponse()
+        ->redirect('/');
+    }
 
-    return $this->render('login', [
-      'captions' => $this->app->getCaptions()->get('login')
+    $content = $this->render('login', [
+      'title' => $this->app->getCaptions()->get('login.title')
     ]);
+    
+    $this->app->getResponse()
+      ->setContent($content)
+      ->send();
   }
 
-  public function renderRegister() : string
+  public function renderRegister(): void
   {
-    if( $this->app->getUser()->isLoggedIn())
-      header('Location: ?page=index');
+    if( $this->app->isLoggedIn())
+    {
+      $this->app->getResponse()
+        ->redirect('/');
+    }
 
-    return $this->render('register', [
-      'captions' => $this->app->getCaptions()->get('register')
+    $content = $this->render('register', [
+      'title' => $this->app->getCaptions()->get('register.title')
     ]);
+    
+    $this->app->getResponse()
+      ->setContent($content)
+      ->send();
   }
 }

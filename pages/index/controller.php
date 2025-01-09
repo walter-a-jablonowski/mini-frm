@@ -6,30 +6,41 @@ use SimpleFramework\Controller;
 
 class IndexController extends Controller
 {
-  public function renderPage(): string  // TASK: maybe rename this
+  public function render(string $view = '-this', array $data = []): string
   {
-    // currently in App
+    // if( $this->app->isLoggedIn())
+    //   $this->app->getResponse()->redirect('/auth');
 
-    // if( ! $this->app->getUser()->isLoggedIn())
-    // {
-    //   $this->app->getResponse()->redirect('?page=auth&action=login');
-    //   return '';
-    // }
-
-    return $this->render('-this', [
+    return parent::render($view, [
+      'title' => $this->app->getCaptions()->get('index.title'),
       'captions' => $this->app->getCaptions(),
       'app' => $this->app
     ]);
   }
 
-  public function logout() : void
+  public function logout(): void
   {
-    $this->app->getUser()->logout();
-    $this->app->getResponse()->json(['success' => true])->send();
+    $user = $this->app->getUser();
+    if( $user)
+    {
+      $user->logout();
+      $this->app->setCurrentUser(null);
+    }
 
-    // TASK: maybe unneeded
-    
-    // $this->app->getUser()->logout();
-    // $this->app->getResponse()->redirect('?page=auth&action=login');
+    $this->app->getResponse()->redirect('/auth');
+  }
+
+  public function ajaxLogout(): void
+  {
+    $user = $this->app->getUser();
+    if( $user)
+    {
+      $user->logout();
+      $this->app->setCurrentUser(null);
+    }
+
+    $this->app->getResponse()
+      ->json(['success' => true])
+      ->send();
   }
 }

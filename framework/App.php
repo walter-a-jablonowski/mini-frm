@@ -12,7 +12,7 @@ class App
   private Request $request;
   private Response $response;
   private Session $session;
-  private User $user;
+  private ?User $currentUser = null;
   private ErrorHandler $errorHandler;
   private Captions $captions;
 
@@ -44,6 +44,7 @@ class App
     try 
     {
       // Initialize core components first that don't depend on others
+      
       $this->config = new Config();
       $this->errorHandler = new ErrorHandler();
       $this->session = new Session();
@@ -51,24 +52,53 @@ class App
       $this->response = new Response();
       
       // Then initialize components that may need the core ones
+      
       $this->router = new Router();
       $this->captions = new Captions();
       
       // Initialize user last since it depends on session
-      $this->user = new User($this->session);
-      
+      if( $this->session->has('user_id'))
+      {
+        error_log("App->initializeComponents: Found user_id in session: " . $this->session->get('user_id'));
+        try 
+        {
+          $user = new User('id', $this->session->get('user_id'));
+          $this->setCurrentUser($user);
+        }
+        catch(\RuntimeException $e)
+        {
+          error_log("App->initializeComponents: Failed to load user: " . $e->getMessage());
+          $this->session->remove('user_id');
+        }
+      }
     }
     catch (\Throwable $e) {
       throw $e;
     }
   }
 
+  public function getSession(): Session
+  {
+    return $this->session;
+  }
+
+
+  public function isLoggedIn(): bool  // sometimes easier in App, makes sense in User as well
+  {
+    error_log("App->isLoggedIn: Checking login state, currentUser: " . ($this->currentUser ? "exists" : "null"));
+    if( ! $this->currentUser)
+      return false;
+      
+    return $this->currentUser->isLoggedIn();
+  }
+
   public function run(): void
   {
-    try 
-    {
+    try {
+
       // Check authentication and redirect if needed
-      if( ! $this->user->isLoggedIn() && 
+
+      if(( ! $this->isLoggedIn()) && 
           $this->request->get('page') !== 'auth' && 
           ! $this->request->isAjax())
       {
@@ -79,8 +109,8 @@ class App
       $route = $this->router->dispatch($this->request);
       $this->response->setContent($route);
       $this->response->send();
-    } catch (\Throwable $e) 
-    {
+    }
+    catch(\Throwable $e) {
       $this->errorHandler->handle($e);
     }
   }
@@ -105,14 +135,15 @@ class App
     return $this->response;
   }
 
-  public function getSession(): Session
+  public function getUser(): ?User
   {
-    return $this->session;
+    return $this->currentUser;
   }
 
-  public function getUser(): User
+  public function setCurrentUser(?User $user): void
   {
-    return $this->user;
+    error_log("App->setCurrentUser: Setting currentUser to: " . ($user ? "User#" . $user->get('id') : "null"));
+    $this->currentUser = $user;
   }
 
   public function getErrorHandler(): ErrorHandler

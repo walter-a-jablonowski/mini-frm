@@ -52,8 +52,11 @@ class File extends Entity
 
   public function fullPath(): string
   {
-    if( !$this->extension)
-      $this->extension = 'yaml';
+    if( ! $this->extension)
+      $this->findExtension();
+      
+    if( ! $this->extension)
+      $this->extension = 'yml';
 
     return sprintf('%s/%s.%s', 
       $this->basePath, 
@@ -67,7 +70,7 @@ class File extends Entity
     $path = $this->fullPath();
     $dir = dirname($path);
 
-    if( !is_dir($dir))
+    if( ! is_dir($dir))
       mkdir($dir, 0777, true);
 
     switch($this->extension)
@@ -86,10 +89,25 @@ class File extends Entity
     file_put_contents($path, $content);
   }
 
+  public function getBasePath(): string
+  {
+    return $this->basePath;
+  }
+
   private function findExtension(): void
   {
-    $extensions = ['yaml', 'yml', 'json'];
+    $extensions = ['yml', 'yaml', 'json'];
+    
+    // First check if the path already has an extension
+    $pathInfo = pathinfo($this->relativePath);
+    if( isset($pathInfo['extension']) && in_array($pathInfo['extension'], $extensions))
+    {
+      $this->extension = $pathInfo['extension'];
+      $this->relativePath = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
+      return;
+    }
 
+    // Then check for existing files
     foreach($extensions as $ext)
     {
       $path = sprintf('%s/%s.%s', 
