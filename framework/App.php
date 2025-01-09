@@ -59,7 +59,6 @@ class App
       // Initialize user last since it depends on session
       if( $this->session->has('user_id'))
       {
-        error_log("App->initializeComponents: Found user_id in session: " . $this->session->get('user_id'));
         try 
         {
           $user = new User('id', $this->session->get('user_id'));
@@ -67,7 +66,6 @@ class App
         }
         catch(\RuntimeException $e)
         {
-          error_log("App->initializeComponents: Failed to load user: " . $e->getMessage());
           $this->session->remove('user_id');
         }
       }
@@ -85,11 +83,7 @@ class App
 
   public function isLoggedIn(): bool  // sometimes easier in App, makes sense in User as well
   {
-    error_log("App->isLoggedIn: Checking login state, currentUser: " . ($this->currentUser ? "exists" : "null"));
-    if( ! $this->currentUser)
-      return false;
-      
-    return $this->currentUser->isLoggedIn();
+    return $this->currentUser !== null && $this->currentUser->isLoggedIn();
   }
 
   public function run(): void
@@ -142,7 +136,6 @@ class App
 
   public function setCurrentUser(?User $user): void
   {
-    error_log("App->setCurrentUser: Setting currentUser to: " . ($user ? "User#" . $user->get('id') : "null"));
     $this->currentUser = $user;
   }
 
