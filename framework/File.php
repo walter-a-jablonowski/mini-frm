@@ -11,7 +11,13 @@ class File extends Entity
   public function __construct(string $relativePath)
   {
     parent::__construct();
-    $this->basePath = dirname(__DIR__) . '/data';
+    $rootDir = dirname(__DIR__);
+    
+    if( strpos($relativePath, 'config/') === 0)
+      $this->basePath = $rootDir;
+    else
+      $this->basePath = $rootDir . '/data';
+      
     $this->relativePath = $relativePath;
     $this->findExtension();
   }
@@ -49,7 +55,7 @@ class File extends Entity
 
     return sprintf('%s/%s.%s', 
       $this->basePath, 
-      $this->relativePath, 
+      $this->relativePath,
       $this->extension
     );
   }
@@ -58,11 +64,9 @@ class File extends Entity
   {
     $path = $this->fullPath();
     $dir = dirname($path);
-    
+
     if( !is_dir($dir))
       mkdir($dir, 0777, true);
-      
-    $content = '';
 
     switch($this->extension)
     {
@@ -76,22 +80,22 @@ class File extends Entity
       default:
         $content = $this->data['content'] ?? '';
     }
-    
+
     file_put_contents($path, $content);
   }
 
   private function findExtension(): void
   {
     $extensions = ['json', 'yml', 'yaml'];
-    
+
     foreach($extensions as $ext)
     {
       $path = sprintf('%s/%s.%s', 
-        $this->basePath,
+        $this->basePath, 
         $this->relativePath,
         $ext
       );
-      
+
       if( file_exists($path))
       {
         $this->extension = $ext;
