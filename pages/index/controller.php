@@ -5,7 +5,7 @@ use SimpleFramework\Controller;
 
 class IndexController extends Controller
 {
-  public function index(): string
+  public function renderPage(): string  // TASK: maybe rename this
   {
     // currently in App
 

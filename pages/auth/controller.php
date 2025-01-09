@@ -6,7 +6,7 @@ use SimpleFramework\Controller;
 
 class AuthController extends Controller
 {
-  public function login(): string
+  public function renderLogin() : string
   {
     if( $this->app->getUser()->isLoggedIn())
       header('Location: ?page=index');
@@ -16,7 +16,7 @@ class AuthController extends Controller
     ]);
   }
 
-  public function register(): string
+  public function renderRegister() : string
   {
     if( $this->app->getUser()->isLoggedIn())
       header('Location: ?page=index');

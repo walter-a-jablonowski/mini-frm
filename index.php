@@ -11,12 +11,12 @@ $app = App::getInstance();
 $router = $app->getRouter();
 
 // Auth routes
-$router->add('auth', 'App\\Pages\\Auth\\AuthController', 'login');
-$router->add('auth/login', 'App\\Pages\\Auth\\AuthController', 'login');
-$router->add('auth/register', 'App\\Pages\\Auth\\AuthController', 'register');
+$router->add('auth', 'App\\Pages\\Auth\\AuthController', 'renderLogin');
+$router->add('auth/login', 'App\\Pages\\Auth\\AuthController', 'renderLogin');
+$router->add('auth/register', 'App\\Pages\\Auth\\AuthController', 'renderRegister');
 
 // Index route
-$router->add('index', 'App\\Pages\\Index\\IndexController', 'index');
+$router->add('index', 'App\\Pages\\Index\\IndexController', 'renderPage');
 $router->add('index/logout', 'App\\Pages\\Index\\IndexController', 'logout');
 
 // Run the application
