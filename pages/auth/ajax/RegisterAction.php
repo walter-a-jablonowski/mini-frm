@@ -2,8 +2,6 @@
 
 namespace App\Pages\Auth;
 
-use SimpleFramework\App;
-use SimpleFramework\Response;
 use SimpleFramework\User;
 
 trait RegisterAction

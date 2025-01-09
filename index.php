@@ -17,7 +17,6 @@ $router->add('auth/register', 'App\\Pages\\Auth\\AuthController', 'renderRegiste
 
 // Index route
 $router->add('index', 'App\\Pages\\Index\\IndexController', 'render');
-$router->add('index/logout', 'App\\Pages\\Index\\IndexController', 'logout');
 
 // Run the application
 $app->run();

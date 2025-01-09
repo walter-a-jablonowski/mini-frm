@@ -27,18 +27,6 @@ class IndexController extends Controller
       $this->app->setCurrentUser(null);
     }
 
-    $this->app->getResponse()->redirect('/auth');
-  }
-
-  public function ajaxLogout(): void
-  {
-    $user = $this->app->getUser();
-    if( $user)
-    {
-      $user->logout();
-      $this->app->setCurrentUser(null);
-    }
-
     $this->app->getResponse()
       ->json(['success' => true])
       ->send();

@@ -8,7 +8,7 @@ trait LoginAction
 {
   public function login(): void
   {
-    $request = $this->app->getRequest();
+    $request  = $this->app->getRequest();
     $response = $this->app->getResponse();
     $data = $request->json();
 
@@ -24,9 +24,7 @@ trait LoginAction
       $user = new User('username', $data['username']);
       
       if( ! $user->login($data['username'], $data['password']))
-      {
         throw new \RuntimeException('Invalid credentials');
-      }
       
       $response->json(['success' => true])->send();
     }

@@ -14,7 +14,7 @@ class IndexController
     
     try
     {
-      const response = await fetch('ajax.php?page=index&handler=ajaxLogout', {
+      const response = await fetch('ajax.php?page=index&handler=logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
