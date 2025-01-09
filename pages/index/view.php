@@ -30,9 +30,9 @@
         </ul>
         <div class="d-flex">
           <?php if( $app->getUser()->isLoggedIn()): ?>
-            <a href="?page=auth&action=logout" class="btn btn-outline-light">
+            <button id="logout-button" class="btn btn-outline-light">
               <?= $captions->data['nav']['logout'] ?? 'Logout' ?>
-            </a>
+            </button>
           <?php else: ?>
             <a href="?page=auth" class="btn btn-outline-light me-2">
               <?= $captions->data['nav']['login'] ?? 'Login' ?>

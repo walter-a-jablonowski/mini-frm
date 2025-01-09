@@ -90,4 +90,6 @@ class AuthController
   }
 }
 
-new AuthController();
+document.addEventListener('DOMContentLoaded', () => {
+  new AuthController();
+});

@@ -21,4 +21,10 @@ class IndexController
     include __DIR__ . '/view.php';
     return ob_get_clean();
   }
+
+  public function logout(): void
+  {
+    $this->app->getUser()->logout();
+    $this->app->getResponse()->redirect('?page=auth&action=login');
+  }
 }
