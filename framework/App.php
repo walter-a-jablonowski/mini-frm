@@ -59,18 +59,17 @@ class App
       // Initialize user last since it depends on session
       if( $this->session->has('user_id'))
       {
-        try 
-        {
+        try {
+
           $user = new User('id', $this->session->get('user_id'));
           $this->setCurrentUser($user);
         }
-        catch(\RuntimeException $e)
-        {
+        catch(\RuntimeException $e) {
           $this->session->remove('user_id');
         }
       }
     }
-    catch (\Throwable $e) {
+    catch(\Throwable $e) {
       throw $e;
     }
   }
