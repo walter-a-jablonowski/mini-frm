@@ -7,31 +7,32 @@ use Symfony\Component\Yaml\Yaml;
 class User
 {
   private ?File $file = null;
-  private ?self $currentUser = null;
 
   public function __construct( string $key, $value )  
   {
     if( $key === 'id')
     {
       // When loading by ID, we need to find the username first
+
       foreach( self::getAllUsers() as $user)
       {
         if( (int)$user->get('id') === (int)$value)
         {
           $this->file = $user->file;
-          $this->file->load();
+          $this->file->load();  // TASK: do we need this?
           return;
         }
       }
 
-      throw new \RuntimeException("User not found");
+      throw new \RuntimeException("User missing");
     }
     
-    // Loading by username (or other keys)
-    $this->file = new File("data/users/$value/-this");
+    // Loading by username (or misc)
+
+    $this->file = new File('data/users', "$value/-this");
       
     if( ! file_exists($this->file->fullPath()))
-      throw new \RuntimeException("User not found");
+      throw new \RuntimeException("User missing");
       
     $this->file->load();
     
@@ -67,7 +68,7 @@ class User
     $users = self::getAllUsers();
     $id = count($users) + 1;
     
-    $userFile = new File("data/users/{$username}/-this");
+    $userFile = new File('data/users', "{$username}/-this");
     $userFile->set('id', $id);
     $userFile->set('username', $username);
     $userFile->set('password', password_hash($password, PASSWORD_DEFAULT));
@@ -78,12 +79,10 @@ class User
 
   public static function findBy(string $key, $value): ?self
   {
-    try 
-    {
+    try {
       return new self($key, $value);
     }
-    catch(\RuntimeException $e)
-    {
+    catch(\RuntimeException $e) {
       return null;
     }
   }
@@ -109,7 +108,6 @@ class User
       
     $app = App::getInstance();
     $app->getSession()->set('user_id', (int)$this->get('id'));
-    $this->currentUser = $this;
     $app->setCurrentUser($this);
     
     return true;
@@ -135,7 +133,6 @@ class User
     $app->getSession()->remove('user_id');
     $app->setCurrentUser(null);
     
-    $this->currentUser = null;
     $this->file = null;
   }
 }

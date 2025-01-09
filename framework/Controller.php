@@ -21,7 +21,7 @@ class Controller
     );
 
     if( ! file_exists($viewPath))
-      throw new \RuntimeException("View not found: {$viewPath}");
+      throw new \RuntimeException("View missing: {$viewPath}");
 
     extract($data);
     

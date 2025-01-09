@@ -6,14 +6,18 @@ use Symfony\Component\Yaml\Yaml;
 
 class File extends Entity
 {
-  private string  $relativePath;
+  private string  $base;
+  private string  $identifier;
+  private string  $full;  // currently with base but no ext
   private ?string $extension = null;
 
-  public function __construct(string $relativePath)
+  public function __construct( string $base, string $identifier)
   {
     parent::__construct();
           
-    $this->relativePath = $relativePath;
+    $this->base = $base;
+    $this->identifier = $identifier;
+    $this->full = "$base/$identifier";
     $this->findExtension();
   }
 
@@ -51,10 +55,7 @@ class File extends Entity
     if( ! $this->extension)
       $this->extension = 'yml';
 
-    return sprintf('%s.%s', 
-      $this->relativePath,
-      $this->extension
-    );
+    return $this->full . '.' . $this->extension;
   }
 
   public function save(): void
@@ -86,21 +87,20 @@ class File extends Entity
     $extensions = ['yml', 'yaml', 'json'];
     
     // First check if the path already has an extension
-    $pathInfo = pathinfo($this->relativePath);
+
+    $pathInfo = pathinfo($this->full);
+
     if( isset($pathInfo['extension']) && in_array($pathInfo['extension'], $extensions))
     {
-      $this->extension = $pathInfo['extension'];
-      $this->relativePath = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
+      $this->extension  = $pathInfo['extension'];
+      $this->full = $pathInfo['dirname'] . '/' . $pathInfo['filename'];
       return;
     }
 
     // Then check for existing files
     foreach($extensions as $ext)
     {
-      $path = sprintf('%s.%s', 
-        $this->relativePath,
-        $ext
-      );
+      $path = $this->full . '.' . $this->extension;
 
       if( file_exists($path))
       {

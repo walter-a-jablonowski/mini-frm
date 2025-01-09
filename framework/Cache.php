@@ -8,7 +8,7 @@ class Cache
 
   public function __construct(string $namespace)
   {
-    $this->file = new File("data/{$namespace}");
+    $this->file = new File("data/{$namespace}", '-this');
     
     if( ! file_exists($this->file->fullPath()))
     {
@@ -56,7 +56,7 @@ class Cache
 
   public function clear(): void
   {
-    $this->file = new File("data/{$this->namespace}");
+    $this->file = new File("data/{$this->namespace}", '-this');
     $this->file->save();
   }
 }

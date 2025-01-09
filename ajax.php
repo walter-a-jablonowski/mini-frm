@@ -35,7 +35,7 @@ if( ! class_exists($controllerClass))
 {
   $app->getResponse()
     ->setStatusCode(404)
-    ->json(['error' => 'Controller not found'])
+    ->json(['error' => 'Controller missing'])
     ->send();
 }
 
@@ -45,7 +45,7 @@ if( ! method_exists($controller, $handler))
 {
   $app->getResponse()
     ->setStatusCode(404)
-    ->json(['error' => 'Handler not found'])
+    ->json(['error' => 'Handler missing'])
     ->send();
 }
 

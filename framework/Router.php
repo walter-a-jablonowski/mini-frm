@@ -35,19 +35,19 @@ class Router
       $page = $page . '/' . $action;
 
     if( ! isset($this->routes[$page]))
-      throw new \RuntimeException("Page not found: {$page}");
+      throw new \RuntimeException("Page missing: {$page}");
 
     $route = $this->routes[$page];
     $controllerClass = $route['controller'];
     $action = $route['action'];
 
     if( ! class_exists($controllerClass))
-      throw new \RuntimeException("Controller not found: {$controllerClass}");
+      throw new \RuntimeException("Controller missing: {$controllerClass}");
 
     $controller = new $controllerClass();
     
     if( ! method_exists($controller, $action))
-      throw new \RuntimeException("Action not found: {$action}");
+      throw new \RuntimeException("Action missing: {$action}");
 
     foreach($this->beforeMiddleware as $middleware)
       $middleware($request);

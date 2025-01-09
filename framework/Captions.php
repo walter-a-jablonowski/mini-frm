@@ -8,7 +8,7 @@ class Captions
 
   public function __construct()
   {
-    $this->file = new File('config/captions');
+    $this->file = new File('config', 'captions');
     $this->file->load();
   }
 

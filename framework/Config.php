@@ -8,7 +8,7 @@ class Config
 
   public function __construct()
   {
-    $this->file = new File('config/config');
+    $this->file = new File('config' , 'config');
     $this->file->load();
   }
 
