@@ -1,0 +1,161 @@
+classDiagram
+    class App {
+        -instance$ App
+        -initializing$ bool
+        -config Config
+        -router Router
+        -request Request
+        -response Response
+        -session Session
+        -currentUser User
+        -errorHandler ErrorHandler
+        -captions Captions
+        -__construct()
+        -initializeComponents()
+        +getInstance()
+        +getSession()
+        +getRequest()
+        +getResponse()
+        +getCurrentUser()
+        +setCurrentUser()
+        +isLoggedIn()
+        +run()
+    }
+
+    class User {
+        -file File
+        +__construct()
+        +getAllUsers()
+        +findBy()
+        +register()
+        +isLoggedIn()
+        +login()
+        +get()
+        +set()
+    }
+
+    class File {
+        -base string
+        -identifier string
+        -full string
+        -extension string
+        +__construct()
+        +fullPath()
+        +load()
+        +save()
+        -findExtension()
+    }
+
+    class Session {
+        -cache Cache
+        +__construct()
+        +set()
+        +get()
+        +remove()
+        +destroy()
+        +getCache()
+        +has()
+    }
+
+    class Router {
+        -routes Array
+        -beforeMiddleware Array
+        -afterMiddleware Array
+        +add()
+        +before()
+        +after()
+        +dispatch()
+    }
+
+    class Request {
+        -get Array
+        -post Array
+        -server Array
+        -files Array
+        -json Array
+        +__construct()
+        +get()
+        +post()
+        +isJson()
+        +json()
+        +isAjax()
+        +getMethod()
+        +getUri()
+    }
+
+    class Response {
+        -statusCode int
+        -headers Array
+        -content string
+        +setStatusCode()
+        +setHeader()
+        +setContent()
+        +redirect()
+        +json()
+        +send()
+    }
+
+    class Config {
+        -file File
+        +__construct()
+        +get()
+        +set()
+    }
+
+    class ErrorHandler {
+        +register()
+        +handle()
+        +handleError()
+        +handleException()
+        -renderErrorPage()
+    }
+
+    class Captions {
+        -file File
+        +__construct()
+        +get()
+        +set()
+    }
+
+    class Cache {
+        -file File
+        +__construct()
+        +get()
+        +set()
+        +remove()
+        +clear()
+    }
+
+    class Controller {
+        #app App
+        +__construct()
+        #render()
+        #json()
+    }
+
+    class Entity {
+        #data Array
+        +__construct()
+        +__get()
+        +__set()
+        +get()
+        +set()
+        +load()*
+    }
+
+    App *-- Config
+    App *-- Router
+    App *-- Request
+    App *-- Response
+    App *-- Session
+    App *-- User
+    App *-- ErrorHandler
+    App *-- Captions
+    User *-- File
+    Cache *-- File
+    Config *-- File
+    Captions *-- File
+    Controller o-- App
+    Session *-- Cache
+    User --|> Entity
+    File --|> Entity
