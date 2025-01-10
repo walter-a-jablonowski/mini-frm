@@ -24,23 +24,20 @@ Possible extensions
 
 ## Installation
 
-1. Run composer install to get dependencies
+- Run composer install to get dependencies
    ```bash
    composer install
    ```
 
-2. Ensure these directories exist and are writable
+- Ensure these directories exist and are writable
    - /data
    - /data/cache
    - /data/config
    - /data/users
+ 
+## Structure
 
-3. Start the PHP development server
-   ```bash
-   php -S localhost:8000
-   ```
-
-## Directory Structure
+AI generated [class diagram](misc/framework_class_diagram.mermaid)
 
 ```
 /config
