@@ -1,6 +1,6 @@
 # PHP Framework
 
-**[ DEPRECATED ]** This was replaced by [micro-frm](https://github.com/walter-a-jablonowski/micro-frm), just ignore it
+**[ DEPRECATED ]** This was replaced by [micro-frm](https://github.com/walter-a-jablonowski/micro-frm), all seen (just ignore it)
 
 -----------
 
