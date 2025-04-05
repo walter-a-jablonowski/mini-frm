@@ -15,14 +15,9 @@ class ErrorHandler
     $this->handleException($e);
   }
 
-  public function handleError(
-    int $errno, 
-    string $errstr, 
-    string $errfile = '', 
-    int $errline = 0
-  ): bool
+  public function handleError( int $errno, string $errstr, string $errfile = '',  int $errline = 0 ) : bool
   {
-    if( !(error_reporting() & $errno))
+    if( ! (error_reporting() & $errno))
       return false;
 
     throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
@@ -30,7 +25,7 @@ class ErrorHandler
 
   public function handleException(\Throwable $e): void
   {
-    $app = App::getInstance();
+    $app = App::getInstance();  // TASK: keep low level
     $request = $app->getRequest();
     $response = $app->getResponse();
 

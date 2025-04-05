@@ -1,5 +1,9 @@
 # PHP Framework
 
+**[ DEPRECATED ]** This was replaced by [micro-frm](https://github.com/walter-a-jablonowski/micro-frm), just ignore it
+
+-----------
+
 PHP framework entirely made by AI with Windsurf IDE and Claude in a few hours (2025-01-08).
 
 I included the most basic framework classes in the initial [prompt](ai.md) to reduce some complexity at first - currently all is file-based (db could be added). A bunch of methods was missing in AI's code but the AI was able to fix that with a series of prompts. Basically we have a framework with nearly no effort.
